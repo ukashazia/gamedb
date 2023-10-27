@@ -7,8 +7,8 @@ const ImageComponent = React.lazy(() => import("@/components/imageComponent"));
 import SearchBar from "@/components/searchBar";
 import { Suspense, useEffect, useState } from "react";
 import Loading from "./loading";
-import Gallery from "@/components/gallery";
 import GalleryComponent from "@/components/gallery";
+import RAWG_API_KEY from "@/config";
 
 export default function Home() {
   const [searchText, setSearchText] = useState("");
@@ -87,7 +87,8 @@ export default function Home() {
 
 async function fetchData(params) {
   let baseUrl = "https://api.rawg.io/api/games";
-  const key = "040c0c59528d4a2aa78442879d7030c4";
+  const key = RAWG_API_KEY;
+  console.log(key);
 
   let options = {
     key: key,
