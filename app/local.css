@@ -1,18 +1,28 @@
 main {
-  /* background-image: url("https://media.rawg.io/media/games/45b/45b57ed59de4b84effd8f6bc4b7bf515.jpg"); */
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    height: 100vh;
-    width: 100vw;
-    display: flex;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  /* height: 100vh;
+  width: 100vw; */
+  /* display: flex; */
 }
 
 main > div {
-    /* apply gradient from top to bottom from transparent to black */
-    background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.671),  rgb(0, 0, 0));
-    /* background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.671),  rgb(255, 255, 255)); */
+  background-image: linear-gradient(
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.671),
+    rgb(255, 255, 255)
+  );
 
-    backdrop-filter: blur(1px);
-    /* background-color: rgba(255, 255, 255, 0.041); */
+  backdrop-filter: blur(3px);
+}
+
+@media (prefers-color-scheme: dark) {
+  main > div {
+    background-image: linear-gradient(
+      rgba(255, 255, 255, 0),
+      rgba(0, 0, 0, 0.671),
+      rgb(0, 0, 0)
+    );
+  }
 }

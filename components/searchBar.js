@@ -2,6 +2,7 @@ function SearchBar(props) {
   return (
     <input
       type="search"
+      id={props.id}
       placeholder="Search anything ..."
       onBlur={props.onBlur}
       onInput={props.onInput}
