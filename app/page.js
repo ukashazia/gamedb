@@ -1,17 +1,15 @@
 "use client";
 
-const ImageComponent = dynamic(() => import("@/components/imageComponent"));
-import { Suspense, useEffect, useState } from "react";
+import ImageComponent from "@/components/imageComponent";
 import GalleryComponent from "@/components/gallery";
 import GenereList from "@/components/genereList";
 import SearchBar from "@/components/searchBar";
+import { useEffect, useState } from "react";
 import Heading from "@/components/heading";
 import Button from "@/components/button";
 import { normalize } from "./fetchData";
 import { fetchData } from "./fetchData";
-import dynamic from "next/dynamic";
-import Loading from "./loading";
-
+import Head from "next/head";
 export default function Home() {
   const [gameData, setGameData] = useState(null);
   const [searchText, setSearchText] = useState(null);
@@ -34,6 +32,9 @@ export default function Home() {
 
   return (
     <>
+      <Head>
+        <title>{(gameData && gameData.results[0].name) || "Gamedb"}</title>
+      </Head>
       <main
         style={{
           "--image-url": `url(${
@@ -42,13 +43,12 @@ export default function Home() {
         }}
         className={`flex  flex-col bg-[image:var(--image-url)]`}>
         <div className="p-16 h-[100dvh]">
-          <form
-            className="flex gap-2 w-full justify-center"
-            onSubmit={handleSubmit}>
-            <label htmlFor="search"></label>
-            <SearchBar id={"search"} />
-            <Button text={"search"} type={"submit"} />
-          </form>
+          <SearchBar
+            name={"search"}
+            onSubmit={handleSubmit}
+            placeholder="Search anything ..."
+            searchButtonText={"search"}
+          />
           <div className="flex mt-20">
             {gameData == null ? (
               <Heading>Hey there!</Heading>
@@ -57,10 +57,11 @@ export default function Home() {
                 <div className="flex flex-col items-center xl:items-start">
                   <div className="w-[600px]">
                     <ImageComponent
+                      key={gameData.results[0].id}
                       src={gameData.results[0].background_image}
                       alt={gameData.results[0].slug}
                       width={600}
-                      height={100}
+                      height={300}
                       className={""}
                     />
                   </div>
@@ -87,6 +88,7 @@ export default function Home() {
                   <GalleryComponent
                     data={gameData.results[0].short_screenshots}
                     name={gameData.results[0].slug}
+                    key={gameData.results[0].slug}
                     itemsWrapperClass={""}
                   />
                 </div>

@@ -1,7 +1,7 @@
 function Button(props) {
   return (
     <button
-      className="color-secondary text-white p-2 rounded-lg"
+      className="bg-black text-white py-2 px-4 rounded-lg"
       type={props.type}
       onClick={props.onClick}>
       {props.text}

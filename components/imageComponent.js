@@ -11,7 +11,7 @@ function ImageComponent(props) {
       src={props.src}
       alt={props.alt}
       className={`${props.className} rounded-lg shadow-2xl ${
-        loading ? "animate-pulse bg-gray-500" : ""
+        loading ? `animate-pulse bg-gray-500 min-h-[${props.height}px]` : ""
       }`}
       onLoadingComplete={() => setLoading(false)}
     />

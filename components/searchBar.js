@@ -1,14 +1,22 @@
+import Button from "@/components/button";
+
 function SearchBar(props) {
   return (
-    <input
-      type="search"
-      id={props.id}
-      placeholder="Search anything ..."
-      onBlur={props.onBlur}
-      onInput={props.onInput}
-      onKeyDown={props.onKeyDown}
-      className={`bg-white/80 text-black rounded-lg pl-2 py-1 border border-gray-300 placeholder:text-gray-400 ${props.className}`}
-    />
+    <form
+      className="flex gap-2 w-full justify-center"
+      onSubmit={props.onSubmit}>
+      <label htmlFor={props.name}></label>
+      <input
+        type="search"
+        id={props.name}
+        placeholder={props.placeholder}
+        onBlur={props.onBlur}
+        onInput={props.onInput}
+        onKeyDown={props.onKeyDown}
+        className={`bg-white/80 text-black rounded-lg pl-2 py-1 border border-gray-300 placeholder:text-gray-400 ${props.className}`}
+      />
+      <Button text={props.searchButtonText} type={"submit"} />
+    </form>
   );
 }
 

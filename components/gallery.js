@@ -1,7 +1,10 @@
 import ImageComponent from "./imageComponent";
 
 function GalleryComponent(props) {
-  return props.data.map((item) => (
+  let data = props.data;
+  data.shift();
+
+  return data.map((item) => (
     <GalleryCard
       src={item.image}
       alt={props.name}
