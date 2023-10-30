@@ -8,12 +8,14 @@ function ImageComponent(props) {
     <Image
       height={props.height}
       width={props.width}
+      sizes={props.sizes}
       src={props.src}
       alt={props.alt}
+      fill={props.fill}
       className={`${props.className} rounded-lg shadow-2xl ${
         loading ? `animate-pulse bg-gray-500 min-h-[${props.height}px]` : ""
       }`}
-      onLoadingComplete={() => setLoading(false)}
+      onLoad={() => setLoading(false)}
     />
   );
 }

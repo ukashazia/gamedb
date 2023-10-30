@@ -40,9 +40,9 @@ export default function Page(props) {
             gameData ? gameData.results[0].background_image : ""
           })`,
         }}
-        className={`flex  flex-col bg-[image:var(--image-url)] bg-cover bg-no-repeat`}>
+        className={`flex fixed top-0 w-full flex-col bg-[image:var(--image-url)] bg-cover bg-no-repeat`}>
         <div
-          className={`p-16 h-[100dvh] ${
+          className={`p-16 h-[100dvh] overflow-scroll ${
             gameData ? "gradient-overlay" : "dark:bg-slate-900"
           }`}>
           <SearchBar
@@ -50,21 +50,21 @@ export default function Page(props) {
             onSubmit={handleSubmit}
             placeholder="Search anything ..."
             searchButtonText={"search"}
+            formClass={""}
           />
           <div className="flex mt-20">
             {gameData == null ? (
               <Heading className={"dark:text-white"}>Loading...</Heading>
             ) : (
               <div className="flex justify-between gap-10 w-full flex-col xl:flex-row">
-                <div className="flex flex-col items-center xl:items-start">
-                  <div className="w-[600px]">
+                <div className="flex flex-col items-center xl:w-1/2 xl:items-start">
+                  <div className="w-full h-[400px] relative">
                     <ImageComponent
                       key={gameData.results[0].id}
-                      src={gameData.results[0].background_image}
+                      src={gameData.results[0].background_image || ""}
                       alt={gameData.results[0].slug}
-                      width={600}
-                      height={300}
-                      className={""}
+                      fill={true}
+                      className={"object-cover"}
                     />
                   </div>
                   <div className="flex flex-wrap justify-between items-center mt-5 gap-3 w-full">
@@ -85,15 +85,18 @@ export default function Page(props) {
                       Ratings: {gameData.results[0].rating} / 5
                     </span>
                   </div>
+                    {/* <div className="text-white max-w-[600px]"><p>{gameData.description_raw}</p></div> */}
                 </div>
-                <div className="gallery-grid justify-center items-center xl:justify-end xl:items-start xl:max-h-[70dvh] xl:overflow-scroll w-full">
-                  <GalleryComponent
-                    data={gameData.results[0].short_screenshots}
-                    name={gameData.results[0].slug}
-                    key={gameData.results[0].slug}
-                    itemsWrapperClass={""}
-                  />
-                </div>
+               
+                  <div className="gallery-grid xl:w-1/2 justify-center items-center xl:justify-end xl:items-start xl:max-h-[70dvh] xl:overflow-scroll w-full">
+                    <GalleryComponent
+                      data={gameData.results[0].short_screenshots}
+                      name={gameData.results[0].slug}
+                      key={gameData.results[0].slug}
+                      itemsWrapperClass={""}
+                    />
+                  </div>
+                
               </div>
             )}
           </div>

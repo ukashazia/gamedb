@@ -34,4 +34,6 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, 300px);
   gap: 12px;
+  row-gap: 12px;
+  column-gap: 12px;
 }
