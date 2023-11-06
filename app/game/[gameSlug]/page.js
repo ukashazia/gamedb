@@ -1,59 +1,41 @@
 "use client";
 
 import ImageComponent from "@/components/imageComponent";
-import { normalize, fetchData } from "./fetchData";
 import GalleryComponent from "@/components/gallery";
+import { normalize, fetchData } from "./fetchData";
 import GenereList from "@/components/genereList";
-import SearchBar from "@/components/searchBar";
 import { useEffect, useState } from "react";
 import Heading from "@/components/heading";
-import { useRouter } from "next/navigation";
 
 export default function Page(props) {
   const [gameData, setGameData] = useState(null);
-  const [searchText, setSearchText] = useState(null);
-  // const router = useRouter();
-
-  // const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     (async () => {
       const routeParams = normalize(props.params.gameSlug);
-      setGameData(await fetchData({ search: searchText || routeParams }));
-      // setLoading(true);
+      setGameData(
+        await fetchData({ search: props.searchValue || routeParams })
+      );
     })();
-  }, [searchText, props.params.gameSlug]);
-
-  function handleSubmit(e) {
-    let search = normalize(e.target.elements.search.value);
-    e.preventDefault();
-    if (search !== searchText && search !== "") {
-      setSearchText(search);
-    }
-  }
+  }, [props.searchValue, props.params.gameSlug]);
 
   return (
     <>
-      <main
-        style={{
-          "--image-url": `url(${
-            gameData ? gameData.results[0].background_image : ""
-          })`,
-        }}
-        className={`flex fixed top-0 w-full flex-col bg-[image:var(--image-url)] bg-cover bg-no-repeat`}>
+      <main className={`flex w-full flex-col`}>
         <div
-          className={`p-16 h-[100dvh] overflow-scroll ${
-            gameData ? "gradient-overlay" : "dark:bg-slate-900"
-          }`}>
-          <SearchBar
-            name={"search"}
-            onSubmit={handleSubmit}
-            placeholder="Search anything ..."
-            searchButtonText={"search"}
-            formClass={""}
-          />
-          <div className="flex mt-20">
-            {gameData == null ? (
+          style={{
+            "--image-url": `url(${
+              gameData ? gameData.results[0].background_image : ""
+            })`,
+          }}
+          className={`fixed -z-10 top-0 h-screen w-full bg-[image:var(--image-url)] bg-cover bg-no-repeat `}>
+          <div
+            className={`w-full h-full ${
+              gameData ? "gradient-overlay" : "dark:bg-slate-900"
+            }`}></div>
+        </div>
+        <div className={`px-16 my-8`}>
+          <div className="flex">
+            {!gameData ? (
               <Heading className={"dark:text-white"}>Loading...</Heading>
             ) : (
               <div className="flex justify-between gap-10 w-full flex-col xl:flex-row">
@@ -64,7 +46,8 @@ export default function Page(props) {
                       src={gameData.results[0].background_image || ""}
                       alt={gameData.results[0].slug}
                       fill={true}
-                      className={"object-cover"}
+                      className={"object-cover object-top"}
+                      priority
                     />
                   </div>
                   <div className="flex flex-wrap justify-between items-center mt-5 gap-3 w-full">
@@ -81,22 +64,22 @@ export default function Page(props) {
                         />
                       </ul>
                     </div>
-                    <span className="bg-violet-500 text-white p-1 rounded-md flex place-items-center">
+                    <span className="bg-black border border-gray-800 text-white p-1 rounded-md flex place-items-center">
                       Ratings: {gameData.results[0].rating} / 5
                     </span>
                   </div>
-                    {/* <div className="text-white max-w-[600px]"><p>{gameData.description_raw}</p></div> */}
-                </div>
-               
-                  <div className="gallery-grid xl:w-1/2 justify-center items-center xl:justify-end xl:items-start xl:max-h-[70dvh] xl:overflow-scroll w-full">
-                    <GalleryComponent
-                      data={gameData.results[0].short_screenshots}
-                      name={gameData.results[0].slug}
-                      key={gameData.results[0].slug}
-                      itemsWrapperClass={""}
-                    />
+                  <div className="text-white mt-5">
+                    <p>{gameData.description_raw}</p>
                   </div>
-                
+                </div>
+                <div className="gallery-grid xl:w-1/2 justify-center items-center xl:justify-end xl:items-start  w-full">
+                  <GalleryComponent
+                    data={gameData.results[0].short_screenshots}
+                    name={gameData.results[0].slug}
+                    key={gameData.results[0].slug}
+                    itemsWrapperClass={""}
+                  />
+                </div>
               </div>
             )}
           </div>

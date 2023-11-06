@@ -33,7 +33,6 @@ body {
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, 300px);
+  grid-template-rows: repeat(auto-fit, 170px);
   gap: 12px;
-  row-gap: 12px;
-  column-gap: 12px;
 }

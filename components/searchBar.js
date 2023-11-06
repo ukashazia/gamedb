@@ -2,7 +2,7 @@ function SearchBar(props) {
   return (
     <form
       className={`flex w-full justify-center ${props.formClass}`}
-      onSubmit={props.onSubmit}>
+      onSubmit={props.onSubmit} searchText={props.searchText}>
       <label htmlFor={props.name}></label>
       <input
         type="search"
